@@ -3,7 +3,7 @@
 # and run the container
 
 # Start with a base image
-FROM golang:1.21 as base
+FROM golang:1.24 as base
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -18,7 +18,7 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN go build -o main .
+RUN go build -o murali .
 
 #######################################################
 # Reduce the image size using multi-stage builds
@@ -26,7 +26,7 @@ RUN go build -o main .
 FROM gcr.io/distroless/base
 
 # Copy the binary from the previous stage
-COPY --from=base /app/main .
+COPY --from=base /app/murali .
 
 # Copy the static files from the previous stage
 COPY --from=base /app/static ./static
@@ -35,4 +35,4 @@ COPY --from=base /app/static ./static
 EXPOSE 8080
 
 # Command to run the application
-CMD ["./main"]
+CMD ["./murali"]
