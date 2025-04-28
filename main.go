@@ -4,26 +4,27 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"path/filepath"
 )
 
 func homePage(w http.ResponseWriter, r *http.Request) {
 	// Render the home html page from static folder
-	http.ServeFile(w, r, "static/home.html")
+	http.ServeFile(w, r, filepath.Join("static", "home.html"))
 }
 
 func coursePage(w http.ResponseWriter, r *http.Request) {
 	// Render the course html page
-	http.ServeFile(w, r, "static/courses.html")
+	http.ServeFile(w, r, filepath.Join("static", "courses.html"))
 }
 
 func aboutPage(w http.ResponseWriter, r *http.Request) {
 	// Render the about html page
-	http.ServeFile(w, r, "static/about.html")
+	http.ServeFile(w, r, filepath.Join("static", "about.html"))
 }
 
 func contactPage(w http.ResponseWriter, r *http.Request) {
 	// Render the contact html page
-	http.ServeFile(w, r, "static/contact.html")
+	http.ServeFile(w, r, filepath.Join("static", "contact.html"))
 }
 
 func main() {
