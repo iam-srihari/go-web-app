@@ -1,15 +1,11 @@
-# Containerize the go application that we have created
-# This is the Dockerfile that we will use to build the image
-# and run the container
-
-# Start with a base image
+# Use a Golang image with a shell for debugging purposes
 FROM golang:1.24 as base
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Copy the go.mod and go.sum files to the working directory
-COPY go.mod ./
+COPY go.mod ./  
 
 # Download all the dependencies
 RUN go mod download
@@ -21,9 +17,8 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o murali .
 
 #######################################################
-# Reduce the image size using multi-stage builds
-# We will use a distroless image to run the application
-FROM gcr.io/distroless/base
+# Temporary stage to debug with a shell (instead of distroless)
+FROM golang:1.24
 
 # Copy the binary from the previous stage
 COPY --from=base /app/murali .
@@ -35,4 +30,4 @@ COPY --from=base /app/static ./static
 EXPOSE 8080
 
 # Command to run the application
-CMD ["./murali"]
+CMD ["/bin/bash"]
