@@ -18,7 +18,7 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN go build -o murali .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o murali .
 
 #######################################################
 # Reduce the image size using multi-stage builds
