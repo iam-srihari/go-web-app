@@ -14,7 +14,8 @@ RUN go mod download
 COPY . .
 
 # Set CGO_ENABLED=0 for static build and build the application
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o murali .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o murali . && ls -al /app
+
 
 #######################################################
 
