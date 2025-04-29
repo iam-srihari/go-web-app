@@ -23,16 +23,19 @@ RUN go build -o murali .
 #######################################################
 # Reduce the image size using multi-stage builds
 # We will use a distroless image to run the application
-FROM gcr.io/distroless/base
+FROM debian:bullseye-slim
 
-# Copy the binary from the previous stage
+# Set workdir
+WORKDIR /app
+
+# Install necessary certificates (optional but good practice)
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+
+# Copy the binary and static folder
 COPY --from=base /app/murali .
-
-# Copy the static files from the previous stage
 COPY --from=base /app/static ./static
 
-# Expose the port on which the application will run
 EXPOSE 8080
 
-# Command to run the application
+# Run the application
 CMD ["./murali"]
