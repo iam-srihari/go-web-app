@@ -31,5 +31,6 @@ COPY --from=builder /app/static /static
 EXPOSE 8080
 
 # Command to run the binary
-CMD ["/bin/sh"]
+CMD ["/murali"]
+
 
