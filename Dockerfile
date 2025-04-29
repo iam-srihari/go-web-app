@@ -30,6 +30,10 @@ WORKDIR /app
 COPY --from=base /app/murali .
 COPY --from=base /app/static ./static
 
+# Set CGO_ENABLED=0 for static build
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o murali .
+
+
 EXPOSE 8080
 CMD ["./murali"]
 
