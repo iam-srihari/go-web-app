@@ -9,6 +9,7 @@ import (
 
 func homePage(w http.ResponseWriter, r *http.Request) {
 	// Render the home html page from static folder
+	fmt.Println(">> /home endpoint hit")
 	http.ServeFile(w, r, filepath.Join("static", "home.html"))
 }
 
